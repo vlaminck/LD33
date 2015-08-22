@@ -10,23 +10,25 @@ import SpriteKit
 
 class GameScene: SKScene {
     
-    let playerMovePointsPerSec: CGFloat = 800.0
+    let playerMovePointsPerSec: CGFloat = 1000.0
     var lastUpdateTime: NSTimeInterval = 0
     var dt: NSTimeInterval = 0
     var velocity = CGPointZero
     var lastTouchLocation: CGPoint?
     
-    var player: SKSpriteNode!
+    var player: Player!
     var moveBulletAction: SKAction!
     
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
+
         
-        enumerateChildNodesWithName("player") { (node, stop) in
-            if let node = node as? SKSpriteNode where self.player == nil {
-                self.player = node
-            }
-        }
+        player = Player(imageNamed: "Spaceship")
+        player.xScale = 0.3
+        player.yScale = 0.3
+        player.position = CGPoint(x: 200, y: size.height / 2)
+        player.zRotation = CGFloat(-M_PI_2)
+        addChild(player)
         
         updateBulletAction()
         
