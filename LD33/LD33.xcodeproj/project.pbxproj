@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		72E38D3F1B88DD6900143D29 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E38D3E1B88DD6900143D29 /* AppDelegate.swift */; };
-		72E38D411B88DD6900143D29 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 72E38D401B88DD6900143D29 /* GameScene.sks */; };
 		72E38D431B88DD6900143D29 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E38D421B88DD6900143D29 /* GameScene.swift */; };
 		72E38D451B88DD6900143D29 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E38D441B88DD6900143D29 /* GameViewController.swift */; };
 		72E38D481B88DD6900143D29 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 72E38D461B88DD6900143D29 /* Main.storyboard */; };
@@ -16,6 +15,10 @@
 		72E38D4D1B88DD6900143D29 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 72E38D4B1B88DD6900143D29 /* LaunchScreen.storyboard */; };
 		72E38D581B88DD6900143D29 /* LD33Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E38D571B88DD6900143D29 /* LD33Tests.swift */; };
 		72E38D631B88DD6900143D29 /* LD33UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E38D621B88DD6900143D29 /* LD33UITests.swift */; };
+		72E38D751B88DF8400143D29 /* MyUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E38D741B88DF8400143D29 /* MyUtils.swift */; };
+		72E38D771B88DF8E00143D29 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 72E38D761B88DF8E00143D29 /* spark.png */; };
+		72E38D791B88DF9500143D29 /* StarsEmitter.sks in Resources */ = {isa = PBXBuildFile; fileRef = 72E38D781B88DF9500143D29 /* StarsEmitter.sks */; };
+		72E38D7B1B88DFD800143D29 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 72E38D7A1B88DFD800143D29 /* GameScene.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,7 +41,6 @@
 /* Begin PBXFileReference section */
 		72E38D3B1B88DD6900143D29 /* LD33.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LD33.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		72E38D3E1B88DD6900143D29 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		72E38D401B88DD6900143D29 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		72E38D421B88DD6900143D29 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		72E38D441B88DD6900143D29 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		72E38D471B88DD6900143D29 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -51,6 +53,10 @@
 		72E38D5E1B88DD6900143D29 /* LD33UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LD33UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		72E38D621B88DD6900143D29 /* LD33UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LD33UITests.swift; sourceTree = "<group>"; };
 		72E38D641B88DD6A00143D29 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		72E38D741B88DF8400143D29 /* MyUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyUtils.swift; sourceTree = "<group>"; };
+		72E38D761B88DF8E00143D29 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
+		72E38D781B88DF9500143D29 /* StarsEmitter.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = StarsEmitter.sks; sourceTree = "<group>"; };
+		72E38D7A1B88DFD800143D29 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +107,7 @@
 		72E38D3D1B88DD6900143D29 /* LD33 */ = {
 			isa = PBXGroup;
 			children = (
+				72E38D731B88DF7D00143D29 /* Util */,
 				72E38D701B88DF1000143D29 /* Application */,
 				72E38D721B88DF2400143D29 /* Scene */,
 				72E38D711B88DF1900143D29 /* Assets */,
@@ -141,6 +148,7 @@
 		72E38D711B88DF1900143D29 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				72E38D761B88DF8E00143D29 /* spark.png */,
 				72E38D491B88DD6900143D29 /* Assets.xcassets */,
 			);
 			name = Assets;
@@ -149,10 +157,19 @@
 		72E38D721B88DF2400143D29 /* Scene */ = {
 			isa = PBXGroup;
 			children = (
-				72E38D401B88DD6900143D29 /* GameScene.sks */,
+				72E38D7A1B88DFD800143D29 /* GameScene.sks */,
+				72E38D781B88DF9500143D29 /* StarsEmitter.sks */,
 				72E38D421B88DD6900143D29 /* GameScene.swift */,
 			);
 			name = Scene;
+			sourceTree = "<group>";
+		};
+		72E38D731B88DF7D00143D29 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				72E38D741B88DF8400143D29 /* MyUtils.swift */,
+			);
+			name = Util;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -258,9 +275,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				72E38D411B88DD6900143D29 /* GameScene.sks in Resources */,
+				72E38D771B88DF8E00143D29 /* spark.png in Resources */,
 				72E38D4D1B88DD6900143D29 /* LaunchScreen.storyboard in Resources */,
 				72E38D4A1B88DD6900143D29 /* Assets.xcassets in Resources */,
+				72E38D791B88DF9500143D29 /* StarsEmitter.sks in Resources */,
+				72E38D7B1B88DFD800143D29 /* GameScene.sks in Resources */,
 				72E38D481B88DD6900143D29 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -289,6 +308,7 @@
 				72E38D431B88DD6900143D29 /* GameScene.swift in Sources */,
 				72E38D451B88DD6900143D29 /* GameViewController.swift in Sources */,
 				72E38D3F1B88DD6900143D29 /* AppDelegate.swift in Sources */,
+				72E38D751B88DF8400143D29 /* MyUtils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
