@@ -8,7 +8,20 @@
 
 import SpriteKit
 
+struct PhysicsCategory {
+    static let None     : UInt32 = 0
+    static let All      : UInt32 = UInt32.max
+    static let Player   : UInt32 = 0b1      // 1
+    static let Enemy    : UInt32 = 0b10     // 2
+    static let Bullet   : UInt32 = 0b100    // 4
+}
+
+let playerCategory: UInt32 = 0x1 << 0
+let enemyCategory: UInt32 = 0x1 << 1
+let bulletCategory: UInt32 = 0x1 << 2
+
 class GameScene: SKScene {
+    
     
     let playerMovePointsPerSec: CGFloat = 1000.0
     var lastUpdateTime: NSTimeInterval = 0
@@ -28,19 +41,18 @@ class GameScene: SKScene {
         addChild(player)
         player.startShooting()
         
-        testEnemy()
+        let enemyString = SKAction.repeatAction(SKAction.sequence([
+            SKAction.runBlock { [weak self] in Enemy(type: .A).attackOn(self) },
+            SKAction.waitForDuration(0.5)
+        ]), count: 5)
         
-        runAction(SKAction.sequence([
-            SKAction.waitForDuration(2),
-            SKAction.runBlock { [weak self] in self?.player.incrementPowerup() },
-            SKAction.waitForDuration(2),
-            SKAction.runBlock { [weak self] in self?.player.incrementPowerup() }
-        ]))
+        runAction(SKAction.repeatActionForever(SKAction.sequence([
+            enemyString,
+            SKAction.waitForDuration(5)
+        ])))
+        
+        physicsWorld.contactDelegate = self
 
-    }
-    
-    func testEnemy() {
-        Enemy(type: .A).attackOn(self)
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -105,3 +117,39 @@ class GameScene: SKScene {
     }
     
 }
+
+extension GameScene: SKPhysicsContactDelegate {
+            
+    func didBeginContact(contact: SKPhysicsContact) {
+        let collision: UInt32 = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
+        if collision == PhysicsCategory.Player | PhysicsCategory.Enemy {
+            do {
+                try player.decrementPowerup()
+            } catch {
+                print("GAME OVER")
+            }
+        } else if collision == PhysicsCategory.Enemy | PhysicsCategory.Bullet {
+    
+            var enemy: Enemy?
+            var bullet: Bullet?
+    
+            if let bodyA = contact.bodyA.node as? Enemy, bodyB = contact.bodyB.node as? Bullet {
+                enemy = bodyA
+                bullet = bodyB
+            } else if let bodyB = contact.bodyB.node as? Enemy, bodyA = contact.bodyA.node as? Bullet  {
+                enemy = bodyB
+                bullet = bodyA
+            }
+
+            if let enemy = enemy, bullet = bullet {
+                bullet.removeFromParent()
+                do {
+                    try enemy.hitByBullet(bullet.type)
+                } catch {
+                    player.enemiesKilled++
+                }
+            }
+        }
+    }
+}
+

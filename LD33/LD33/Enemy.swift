@@ -8,8 +8,16 @@
 
 import SpriteKit
 
-enum EnemyType: String {
-    case A = "Spaceship" // "EnemyTypeA"
+enum EnemyType: Int {
+    case A = 4
+    
+    var imageName: String {
+        get {
+            switch self {
+            case .A: return "Spaceship"
+            }
+        }
+    }
     
     func path(size: CGSize) -> CGPath {
         let path = UIBezierPath()
@@ -31,23 +39,29 @@ enum EnemyType: String {
 class Enemy: SKSpriteNode {
     
     var type: EnemyType = .A
-
+    var health: Int = EnemyType.A.rawValue
+    
     convenience init(type: EnemyType) {
-        self.init(imageNamed: type.rawValue)
+        self.init(imageNamed: type.imageName)
         self.type = type
+        self.health = type.rawValue
         color = SKColor.redColor()
         
+        let physicsBody = SKPhysicsBody(circleOfRadius: 50)
+        physicsBody.affectedByGravity = false
+        physicsBody.categoryBitMask = PhysicsCategory.Enemy
+        physicsBody.collisionBitMask = PhysicsCategory.None
+        physicsBody.contactTestBitMask = PhysicsCategory.Player | PhysicsCategory.Bullet
+        self.physicsBody = physicsBody
+
         // spaceship shit
-        xScale = 0.3
-        yScale = 0.3
+        size = CGSize(width: 100, height: 100)
         zRotation = CGFloat(M_PI_2)
     }
     
     func attackOn(scene: SKScene?) {
         guard let scene = scene else { return }
         scene.addChild(self)
-        
-//        position = CGPoint(x: size.width, y: size.height/4)
         
         runAction(SKAction.sequence([
             SKAction.waitForDuration(2.5),
@@ -56,6 +70,14 @@ class Enemy: SKSpriteNode {
                 SKAction.removeFromParent()
             ])
         ]))
+    }
+    
+    func hitByBullet(type: BulletType) throws {
+        health -= type.damage
+        if health <= 0 {
+            removeFromParent()
+            throw GameError.EnemyDied
+        }
     }
  
 }

@@ -13,6 +13,15 @@ enum BulletType: Int { // consider renaming
     case Fast
     case Double
     
+    var damage: Int {
+        get {
+            switch self {
+            case .Slow, .Fast: return 1
+            case .Double: return 2
+            }
+        }
+    }
+    
     var imageName: String {
         get {
             return "Spaceship"
@@ -62,28 +71,34 @@ enum BulletType: Int { // consider renaming
         }
     }
     
-    func bulletNode() -> SKSpriteNode {
+    func laserShape() -> SKShapeNode {
+        switch self {
+        case .Slow, .Fast, .Double:
+            let laserShape = SKShapeNode(rect: CGRect(x: 0, y: -2, width: 20, height: 4))
+            laserShape.fillColor = SKColor.whiteColor()
+            laserShape.strokeColor = SKColor.redColor()
+            laserShape.glowWidth = 3
+            return laserShape
+        }
+    }
+    
+    func bulletNode() -> Bullet { // TODO: probably move this into Bullet.swift
         switch self {
         case .Slow, .Fast:
-            let node = SKSpriteNode(texture: nil, size: CGSize(width: 20, height: 4))
-            let bulletNode = SKShapeNode(rect: CGRect(x: 0, y: -2, width: 20, height: 4))
-            bulletNode.fillColor = SKColor.whiteColor()
-            bulletNode.strokeColor = SKColor.redColor()
-            bulletNode.glowWidth = 3
-            node.addChild(bulletNode)
-            return node
+            let bullet = Bullet(type: self)
+            bullet.addChild(laserShape())
+            return bullet
         case .Double:
-            let bulletNode = SKSpriteNode(texture: nil, size: CGSize(width: 20, height: 20))
+
+            let topLaser = laserShape()
+            topLaser.position.y = 12
+            let bottomLaser = laserShape()
+            bottomLaser.position.y = -12
             
-            let topBullet = BulletType.Slow.bulletNode()
-            topBullet.position.y = 12
-            let bottomBullet = BulletType.Slow.bulletNode()
-            bottomBullet.position.y = -12
-            
-            bulletNode.addChild(topBullet)
-            bulletNode.addChild(bottomBullet)
-            
-            return bulletNode
+            let bullet = Bullet(type: self)
+            bullet.addChild(topLaser)
+            bullet.addChild(bottomLaser)
+            return bullet
         }
     }
     

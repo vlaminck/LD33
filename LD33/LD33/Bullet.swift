@@ -14,7 +14,16 @@ class Bullet: SKSpriteNode {
     
     init(type: BulletType) {
         self.type = type
-        super.init(texture: nil, color: UIColor.clearColor(), size: Bullet.bulletSize(type))
+        let size = Bullet.bulletSize(type)
+        super.init(texture: nil, color: UIColor.clearColor(), size: size)
+
+        let physicsBody = SKPhysicsBody(rectangleOfSize: size)
+        physicsBody.affectedByGravity = false
+        physicsBody.categoryBitMask = PhysicsCategory.Bullet
+        physicsBody.collisionBitMask = PhysicsCategory.None
+        physicsBody.contactTestBitMask = PhysicsCategory.Enemy
+        self.physicsBody = physicsBody
+
     }
 
     required init?(coder aDecoder: NSCoder) {

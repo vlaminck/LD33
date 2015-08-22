@@ -10,12 +10,21 @@ import SpriteKit
 
 private let shootingKey = "playerShootingKey"
 
-public enum PlayerError: ErrorType {
+public enum GameError: ErrorType {
     case PlayerDied
+    case EnemyDied
 }
 
 
 class Player: SKSpriteNode {
+    
+    var enemiesKilled = 0 {
+        didSet {
+            if enemiesKilled % 5 == 0 {
+                incrementPowerup()
+            }
+        }
+    }
     
     var bulletType: BulletType = .Slow {
         didSet {
@@ -29,10 +38,17 @@ class Player: SKSpriteNode {
         let initialPowerupLevel: BulletType = .Slow
         self.init(imageNamed: initialPowerupLevel.imageName)
 
+        let physicsBody = SKPhysicsBody(circleOfRadius: 50)
+        physicsBody.affectedByGravity = false
+        physicsBody.categoryBitMask = PhysicsCategory.Player
+        physicsBody.collisionBitMask = PhysicsCategory.None
+        physicsBody.contactTestBitMask = PhysicsCategory.Enemy
+        self.physicsBody = physicsBody
+
         // spaceship shit
-        xScale = 0.3
-        yScale = 0.3
+        size = CGSize(width: 100, height: 100)
         zRotation = CGFloat(-M_PI_2)
+
     }
     
     func incrementPowerup() {
@@ -42,7 +58,7 @@ class Player: SKSpriteNode {
     }
     
     func decrementPowerup() throws {
-        guard let bulletType = bulletType.previous() else { throw PlayerError.PlayerDied }
+        guard let bulletType = bulletType.previous() else { throw GameError.PlayerDied }
         self.bulletType = bulletType
     }
     
