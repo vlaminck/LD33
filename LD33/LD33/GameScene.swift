@@ -16,16 +16,16 @@ class GameScene: SKScene {
     var velocity = CGPointZero
     var lastTouchLocation: CGPoint?
     
-    let player: SKSpriteNode = SKSpriteNode(imageNamed: "Spaceship")
+    var player: SKSpriteNode!
     
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
         
-        player.position = CGPoint(x: 200, y: size.height / 2)
-        player.zRotation = CGFloat(-M_PI_2)
-        player.xScale = 0.25
-        player.yScale = 0.25
-        addChild(player)
+        enumerateChildNodesWithName("player") { (node, stop) in
+            if let node = node as? SKSpriteNode where self.player == nil {
+                self.player = node
+            }
+        }        
         
     }
     
