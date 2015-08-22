@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		72A3B9FB1B88EE80007D9AE2 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A3B9FA1B88EE80007D9AE2 /* Player.swift */; };
+		72B10B811B88FC0000B43A4C /* Enemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B10B801B88FC0000B43A4C /* Enemy.swift */; };
 		72E38D3F1B88DD6900143D29 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E38D3E1B88DD6900143D29 /* AppDelegate.swift */; };
 		72E38D431B88DD6900143D29 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E38D421B88DD6900143D29 /* GameScene.swift */; };
 		72E38D451B88DD6900143D29 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E38D441B88DD6900143D29 /* GameViewController.swift */; };
@@ -42,6 +43,7 @@
 
 /* Begin PBXFileReference section */
 		72A3B9FA1B88EE80007D9AE2 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		72B10B801B88FC0000B43A4C /* Enemy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enemy.swift; sourceTree = "<group>"; };
 		72E38D3B1B88DD6900143D29 /* LD33.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LD33.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		72E38D3E1B88DD6900143D29 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		72E38D421B88DD6900143D29 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 			isa = PBXGroup;
 			children = (
 				72A3B9FA1B88EE80007D9AE2 /* Player.swift */,
+				72B10B801B88FC0000B43A4C /* Enemy.swift */,
 			);
 			name = Node;
 			sourceTree = "<group>";
@@ -330,6 +333,7 @@
 			files = (
 				72E38D431B88DD6900143D29 /* GameScene.swift in Sources */,
 				72E38D451B88DD6900143D29 /* GameViewController.swift in Sources */,
+				72B10B811B88FC0000B43A4C /* Enemy.swift in Sources */,
 				72E38D3F1B88DD6900143D29 /* AppDelegate.swift in Sources */,
 				72A3B9FB1B88EE80007D9AE2 /* Player.swift in Sources */,
 				72E38D751B88DF8400143D29 /* MyUtils.swift in Sources */,

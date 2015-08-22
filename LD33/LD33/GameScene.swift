@@ -23,20 +23,24 @@ class GameScene: SKScene {
         /* Setup your scene here */
 
         
-        player = Player(imageNamed: "Spaceship")
-        player.xScale = 0.3
-        player.yScale = 0.3
+        player = Player()
         player.position = CGPoint(x: 200, y: size.height / 2)
-        player.zRotation = CGFloat(-M_PI_2)
         addChild(player)
+        player.startShooting()
         
-        updateBulletAction()
+        testEnemy()
         
-        runAction(SKAction.repeatActionForever(SKAction.sequence([
-            SKAction.runBlock { [weak self] in self?.shoot() },
-            SKAction.waitForDuration(0.2)
-        ])))
-        
+        runAction(SKAction.sequence([
+            SKAction.waitForDuration(2),
+            SKAction.runBlock { [weak self] in self?.player.incrementPowerup() },
+            SKAction.waitForDuration(2),
+            SKAction.runBlock { [weak self] in self?.player.incrementPowerup() }
+        ]))
+
+    }
+    
+    func testEnemy() {
+        Enemy(type: .A).attackOn(self)
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
