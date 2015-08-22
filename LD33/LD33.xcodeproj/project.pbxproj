@@ -86,6 +86,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		72A3B9F81B88E377007D9AE2 /* Emitter */ = {
+			isa = PBXGroup;
+			children = (
+				72E38D781B88DF9500143D29 /* StarsEmitter.sks */,
+			);
+			name = Emitter;
+			sourceTree = "<group>";
+		};
 		72E38D321B88DD6900143D29 = {
 			isa = PBXGroup;
 			children = (
@@ -110,10 +118,11 @@
 		72E38D3D1B88DD6900143D29 /* LD33 */ = {
 			isa = PBXGroup;
 			children = (
-				72E38D731B88DF7D00143D29 /* Util */,
 				72E38D701B88DF1000143D29 /* Application */,
-				72E38D721B88DF2400143D29 /* Scene */,
 				72E38D711B88DF1900143D29 /* Assets */,
+				72A3B9F81B88E377007D9AE2 /* Emitter */,
+				72E38D721B88DF2400143D29 /* Scene */,
+				72E38D731B88DF7D00143D29 /* Util */,
 			);
 			path = LD33;
 			sourceTree = "<group>";
@@ -161,7 +170,6 @@
 			isa = PBXGroup;
 			children = (
 				72E38D7A1B88DFD800143D29 /* GameScene.sks */,
-				72E38D781B88DF9500143D29 /* StarsEmitter.sks */,
 				72E38D421B88DD6900143D29 /* GameScene.swift */,
 			);
 			name = Scene;
@@ -539,6 +547,7 @@
 				72E38D691B88DD6A00143D29 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		72E38D6A1B88DD6A00143D29 /* Build configuration list for PBXNativeTarget "LD33Tests" */ = {
 			isa = XCConfigurationList;
@@ -547,6 +556,7 @@
 				72E38D6C1B88DD6A00143D29 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		72E38D6D1B88DD6A00143D29 /* Build configuration list for PBXNativeTarget "LD33UITests" */ = {
 			isa = XCConfigurationList;
@@ -555,6 +565,7 @@
 				72E38D6F1B88DD6A00143D29 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
