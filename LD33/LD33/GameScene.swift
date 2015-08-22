@@ -17,6 +17,7 @@ class GameScene: SKScene {
     var lastTouchLocation: CGPoint?
     
     var player: SKSpriteNode!
+    var moveBulletAction: SKAction!
     
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
@@ -25,7 +26,14 @@ class GameScene: SKScene {
             if let node = node as? SKSpriteNode where self.player == nil {
                 self.player = node
             }
-        }        
+        }
+        
+        updateBulletAction()
+        
+        runAction(SKAction.repeatActionForever(SKAction.sequence([
+            SKAction.runBlock { [weak self] in self?.shoot() },
+            SKAction.waitForDuration(0.2)
+        ])))
         
     }
     
@@ -70,6 +78,24 @@ class GameScene: SKScene {
     func moveSprite(sprite: SKSpriteNode, velocity: CGPoint) {
         let amountToMove = velocity * CGFloat(dt)
         sprite.position += amountToMove
+    }
+    
+    func shoot() {
+        let bulletNode = SKShapeNode(rect: CGRect(x: 0, y: -2, width: 20, height: 4))
+        bulletNode.fillColor = SKColor.whiteColor()
+        bulletNode.strokeColor = SKColor.redColor()
+        bulletNode.glowWidth = 3
+        bulletNode.position = CGPoint(x: player.position.x + player.size.width / 2 - 20, y: player.position.y)
+        addChild(bulletNode)
+        bulletNode.runAction(moveBulletAction)
+    }
+    
+    func updateBulletAction() {
+        // TODO: update based on player powerup level
+        moveBulletAction = SKAction.sequence([
+            SKAction.moveByX(size.width, y: 0, duration: 1),
+            SKAction.removeFromParent()
+        ])
     }
     
 }
