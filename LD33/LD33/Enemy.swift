@@ -40,6 +40,7 @@ class Enemy: SKSpriteNode {
     
     var type: EnemyType = .A
     var health: Int = EnemyType.A.rawValue
+    var dropsPowerup: Bool = false
     
     convenience init(type: EnemyType) {
         self.init(imageNamed: type.imageName)
@@ -57,6 +58,9 @@ class Enemy: SKSpriteNode {
         // spaceship shit
         size = CGSize(width: 100, height: 100)
         zRotation = CGFloat(M_PI_2)
+        
+        // TODO: figure out something better here
+        dropsPowerup = Int(arc4random_uniform(15)) == 0
     }
     
     func attackOn(scene: SKScene?) {
@@ -75,9 +79,19 @@ class Enemy: SKSpriteNode {
     func hitByBullet(type: BulletType) throws {
         health -= type.damage
         if health <= 0 {
-            removeFromParent()
+            die()
             throw GameError.EnemyDied
         }
+    }
+    
+    func die() {
+        if let scene = scene where dropsPowerup {
+            let powerup = PowerUp()
+            powerup.position = self.position
+            scene.addChild(powerup)
+            powerup.move()
+        }
+        removeFromParent()
     }
  
 }

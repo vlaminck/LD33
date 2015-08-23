@@ -18,13 +18,7 @@ public enum GameError: ErrorType {
 
 class Player: SKSpriteNode {
     
-    var enemiesKilled = 0 {
-        didSet {
-            if enemiesKilled % 5 == 0 {
-                incrementPowerup()
-            }
-        }
-    }
+    var enemiesKilled = 0
     
     var bulletType: BulletType = .Slow {
         didSet {
@@ -42,7 +36,7 @@ class Player: SKSpriteNode {
         physicsBody.affectedByGravity = false
         physicsBody.categoryBitMask = PhysicsCategory.Player
         physicsBody.collisionBitMask = PhysicsCategory.None
-        physicsBody.contactTestBitMask = PhysicsCategory.Enemy
+        physicsBody.contactTestBitMask = PhysicsCategory.Enemy | PhysicsCategory.Powerup
         self.physicsBody = physicsBody
 
         // spaceship shit

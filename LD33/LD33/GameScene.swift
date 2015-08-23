@@ -14,6 +14,7 @@ struct PhysicsCategory {
     static let Player   : UInt32 = 0b1      // 1
     static let Enemy    : UInt32 = 0b10     // 2
     static let Bullet   : UInt32 = 0b100    // 4
+    static let Powerup  : UInt32 = 0b1000   // 8
 }
 
 let playerCategory: UInt32 = 0x1 << 0
@@ -119,37 +120,42 @@ class GameScene: SKScene {
 }
 
 extension GameScene: SKPhysicsContactDelegate {
-            
+    
     func didBeginContact(contact: SKPhysicsContact) {
-        let collision: UInt32 = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
-        if collision == PhysicsCategory.Player | PhysicsCategory.Enemy {
+
+        if let (_, _) = collision(contact, ordered: (Player.self, Enemy.self)) {
             do {
                 try player.decrementPowerup()
             } catch {
-                print("GAME OVER")
-            }
-        } else if collision == PhysicsCategory.Enemy | PhysicsCategory.Bullet {
-    
-            var enemy: Enemy?
-            var bullet: Bullet?
-    
-            if let bodyA = contact.bodyA.node as? Enemy, bodyB = contact.bodyB.node as? Bullet {
-                enemy = bodyA
-                bullet = bodyB
-            } else if let bodyB = contact.bodyB.node as? Enemy, bodyA = contact.bodyA.node as? Bullet  {
-                enemy = bodyB
-                bullet = bodyA
-            }
-
-            if let enemy = enemy, bullet = bullet {
-                bullet.removeFromParent()
-                do {
-                    try enemy.hitByBullet(bullet.type)
-                } catch {
-                    player.enemiesKilled++
-                }
+                player.removeFromParent()
             }
         }
+        
+        if let (bullet, enemy) = collision(contact, ordered: (Bullet.self, Enemy.self)) {
+            bullet.removeFromParent()
+            do {
+                try enemy.hitByBullet(bullet.type)
+            } catch {
+                player.enemiesKilled++
+            }
+        }
+        
+        if let (_, powerup) = collision(contact, ordered: (Player.self, PowerUp.self)) {
+            player.incrementPowerup()
+            powerup.removeFromParent()
+        }
     }
+    
+    func collision<T, U>(contact: SKPhysicsContact, ordered: (T.Type, U.Type)) -> (T, U)? {
+        let things = (contact.bodyA.node, contact.bodyB.node)
+        if let first = things.0 as? T, second = things.1 as? U {
+            return (first, second)
+        }
+        if let first = things.1 as? T, second = things.0 as? U {
+            return (first, second)
+        }
+        return nil
+    }
+    
 }
 
