@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		723EF66E1B8A3E840043688E /* Fleet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723EF66D1B8A3E840043688E /* Fleet.swift */; };
+		723EF6701B8A5C440043688E /* Wave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723EF66F1B8A5C440043688E /* Wave.swift */; };
 		72A3B9FB1B88EE80007D9AE2 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A3B9FA1B88EE80007D9AE2 /* Player.swift */; };
 		72B10B811B88FC0000B43A4C /* Enemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B10B801B88FC0000B43A4C /* Enemy.swift */; };
 		72BC136F1B8916930067F109 /* Bullet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72BC136E1B8916930067F109 /* Bullet.swift */; };
@@ -46,6 +48,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		723EF66D1B8A3E840043688E /* Fleet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fleet.swift; sourceTree = "<group>"; };
+		723EF66F1B8A5C440043688E /* Wave.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wave.swift; sourceTree = "<group>"; };
 		72A3B9FA1B88EE80007D9AE2 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		72B10B801B88FC0000B43A4C /* Enemy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enemy.swift; sourceTree = "<group>"; };
 		72BC136E1B8916930067F109 /* Bullet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bullet.swift; sourceTree = "<group>"; };
@@ -114,6 +118,8 @@
 				72BC136E1B8916930067F109 /* Bullet.swift */,
 				72BC13701B8917950067F109 /* BulletType.swift */,
 				72BC13721B8951250067F109 /* PowerUp.swift */,
+				723EF66D1B8A3E840043688E /* Fleet.swift */,
+				723EF66F1B8A5C440043688E /* Wave.swift */,
 			);
 			name = Node;
 			sourceTree = "<group>";
@@ -346,12 +352,14 @@
 			files = (
 				72E38D431B88DD6900143D29 /* GameScene.swift in Sources */,
 				72E38D451B88DD6900143D29 /* GameViewController.swift in Sources */,
+				723EF66E1B8A3E840043688E /* Fleet.swift in Sources */,
 				72B10B811B88FC0000B43A4C /* Enemy.swift in Sources */,
 				72BC136F1B8916930067F109 /* Bullet.swift in Sources */,
 				72E38D3F1B88DD6900143D29 /* AppDelegate.swift in Sources */,
 				72BC13711B8917950067F109 /* BulletType.swift in Sources */,
 				72A3B9FB1B88EE80007D9AE2 /* Player.swift in Sources */,
 				72BC13731B8951250067F109 /* PowerUp.swift in Sources */,
+				723EF6701B8A5C440043688E /* Wave.swift in Sources */,
 				72E38D751B88DF8400143D29 /* MyUtils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -32,6 +32,8 @@ class GameScene: SKScene {
     var player: Player!
     var moveBulletAction: SKAction!
     
+    var waveCount = 0
+    
     var score: Int = 0 {
         willSet {
             if score / 1000 < newValue / 1000 {
@@ -70,21 +72,12 @@ class GameScene: SKScene {
     }
     
     func gameStart() {
-        let enemyString = SKAction.repeatAction(SKAction.sequence([
-            SKAction.runBlock { [weak self] in Enemy(type: .A).attackOn(self) },
-            SKAction.waitForDuration(0.5)
-            ]), count: 5)
-        
-        let keepEmComing = SKAction.repeatActionForever(SKAction.sequence([
-            enemyString,
-            SKAction.waitForDuration(5)
-            ]))
-        
+
+        let delayedStart = SKAction.waitForDuration(20)
         runAction(SKAction.sequence([
-            SKAction.waitForDuration(15),
-            keepEmComing
+            delayedStart,
+            SKAction.runBlock { [weak self] in self?.sendWave(0) }
         ]))
-        
         
         let introScreen = SKSpriteNode(texture: nil, color: UIColor.blackColor(), size: size)
         introScreen.anchorPoint = CGPointZero
@@ -132,6 +125,11 @@ class GameScene: SKScene {
             SKAction.runBlock { [weak self] in self?.player.startShooting() }
         ]))
 
+    }
+    
+    func sendWave(number: Int) {
+        let wave = Wave(number: number, scene: self)
+        wave.start()
     }
     
     func randomColor() -> SKColor {
