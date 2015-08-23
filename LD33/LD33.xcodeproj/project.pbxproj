@@ -12,6 +12,7 @@
 		72BC136F1B8916930067F109 /* Bullet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72BC136E1B8916930067F109 /* Bullet.swift */; };
 		72BC13711B8917950067F109 /* BulletType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72BC13701B8917950067F109 /* BulletType.swift */; };
 		72BC13731B8951250067F109 /* PowerUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72BC13721B8951250067F109 /* PowerUp.swift */; };
+		72C116CD1B8988C800BF98CD /* Invader.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 72C116CC1B8988C800BF98CD /* Invader.mp3 */; };
 		72E38D3F1B88DD6900143D29 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E38D3E1B88DD6900143D29 /* AppDelegate.swift */; };
 		72E38D431B88DD6900143D29 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E38D421B88DD6900143D29 /* GameScene.swift */; };
 		72E38D451B88DD6900143D29 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E38D441B88DD6900143D29 /* GameViewController.swift */; };
@@ -50,6 +51,7 @@
 		72BC136E1B8916930067F109 /* Bullet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bullet.swift; sourceTree = "<group>"; };
 		72BC13701B8917950067F109 /* BulletType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BulletType.swift; sourceTree = "<group>"; };
 		72BC13721B8951250067F109 /* PowerUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PowerUp.swift; sourceTree = "<group>"; };
+		72C116CC1B8988C800BF98CD /* Invader.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Invader.mp3; sourceTree = "<group>"; };
 		72E38D3B1B88DD6900143D29 /* LD33.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LD33.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		72E38D3E1B88DD6900143D29 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		72E38D421B88DD6900143D29 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 		72E38D711B88DF1900143D29 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				72C116CC1B8988C800BF98CD /* Invader.mp3 */,
 				72E38D761B88DF8E00143D29 /* spark.png */,
 				72E38D491B88DD6900143D29 /* Assets.xcassets */,
 			);
@@ -311,6 +314,7 @@
 			files = (
 				72E38D7D1B88E0D100143D29 /* PlayerShoot.sks in Resources */,
 				72E38D771B88DF8E00143D29 /* spark.png in Resources */,
+				72C116CD1B8988C800BF98CD /* Invader.mp3 in Resources */,
 				72E38D4D1B88DD6900143D29 /* LaunchScreen.storyboard in Resources */,
 				72E38D4A1B88DD6900143D29 /* Assets.xcassets in Resources */,
 				72E38D791B88DF9500143D29 /* StarsEmitter.sks in Resources */,

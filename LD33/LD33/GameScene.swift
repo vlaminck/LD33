@@ -23,7 +23,6 @@ let bulletCategory: UInt32 = 0x1 << 2
 
 class GameScene: SKScene {
     
-    
     let playerMovePointsPerSec: CGFloat = 1000.0
     var lastUpdateTime: NSTimeInterval = 0
     var dt: NSTimeInterval = 0
@@ -34,6 +33,12 @@ class GameScene: SKScene {
     var moveBulletAction: SKAction!
     
     var score: Int = 0 {
+        willSet {
+            if score / 1000 < newValue / 1000 {
+                // drop a free powerup for every 100 points earned
+                dropPowerup()
+            }
+        }
         didSet {
             scoreLabel.text = String(format: "Score: %06d", score)
         }
@@ -66,6 +71,12 @@ class GameScene: SKScene {
         scoreLabel.fontColor = SKColor.whiteColor()
         scoreLabel.horizontalAlignmentMode = .Right
         scoreLabel.position = CGPoint(x: size.width - 20, y: size.height - scoreLabel.frame.size.height - 110)
+     
+        
+        runAction(SKAction.repeatActionForever(SKAction.sequence([
+            SKAction.playSoundFileNamed("Invader.mp3", waitForCompletion: true),
+            SKAction.waitForDuration(10)
+        ])))
         
     }
     
@@ -128,6 +139,13 @@ class GameScene: SKScene {
             SKAction.moveByX(size.width, y: 0, duration: 1),
             SKAction.removeFromParent()
         ])
+    }
+    
+    func dropPowerup() {
+        let powerup = PowerUp()
+        powerup.position = CGPoint(x: size.width + 100, y: size.height / 2)
+        addChild(powerup)
+        powerup.move()
     }
     
 }
