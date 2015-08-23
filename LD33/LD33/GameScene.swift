@@ -50,24 +50,8 @@ class GameScene: SKScene {
 
         
         player = Player()
-        player.position = CGPoint(x: 200, y: size.height / 2)
+        player.position = CGPoint(x: -200, y: size.height / 2)
         addChild(player)
-        player.startShooting()
-        
-        let enemyString = SKAction.repeatAction(SKAction.sequence([
-            SKAction.runBlock { [weak self] in Enemy(type: .A).attackOn(self) },
-            SKAction.waitForDuration(0.5)
-        ]), count: 5)
-        
-        let keepEmComing = SKAction.repeatActionForever(SKAction.sequence([
-            enemyString,
-            SKAction.waitForDuration(5)
-        ]))
-        
-        runAction(SKAction.sequence([
-            SKAction.waitForDuration(15),
-            keepEmComing
-        ]))
         
         physicsWorld.contactDelegate = self
         
@@ -77,12 +61,81 @@ class GameScene: SKScene {
         scoreLabel.horizontalAlignmentMode = .Right
         scoreLabel.position = CGPoint(x: size.width - 20, y: size.height - scoreLabel.frame.size.height - 110)
      
-        
         runAction(SKAction.repeatActionForever(SKAction.sequence([
             SKAction.playSoundFileNamed("Invader.mp3", waitForCompletion: true),
             SKAction.waitForDuration(10)
         ])))
         
+        gameStart()
+    }
+    
+    func gameStart() {
+        let enemyString = SKAction.repeatAction(SKAction.sequence([
+            SKAction.runBlock { [weak self] in Enemy(type: .A).attackOn(self) },
+            SKAction.waitForDuration(0.5)
+            ]), count: 5)
+        
+        let keepEmComing = SKAction.repeatActionForever(SKAction.sequence([
+            enemyString,
+            SKAction.waitForDuration(5)
+            ]))
+        
+        runAction(SKAction.sequence([
+            SKAction.waitForDuration(15),
+            keepEmComing
+        ]))
+        
+        
+        let introScreen = SKSpriteNode(texture: nil, color: UIColor.blackColor(), size: size)
+        introScreen.anchorPoint = CGPointZero
+        addChild(introScreen)
+        
+        let label = SKLabelNode(text: "GAME TITLE!!!")
+        label.fontSize = 100
+        introScreen.addChild(label)
+        label.position = CGPoint(x: introScreen.size.width / 2, y: introScreen.size.height / 2)
+        
+        introScreen.runAction(SKAction.repeatActionForever(SKAction.sequence([
+            SKAction.waitForDuration(0.1),
+            SKAction.runBlock {
+                introScreen.color = SKColor.whiteColor()
+            },
+            SKAction.waitForDuration(0.1),
+            SKAction.runBlock { [weak self] in
+                if let randomColor = self?.randomColor() {
+                    introScreen.color = randomColor
+                }
+            },
+            SKAction.waitForDuration(0.1),
+            SKAction.runBlock {
+                introScreen.color = SKColor.blackColor()
+            },
+        ])))
+        introScreen.runAction(SKAction.sequence([
+            SKAction.moveByX(-size.width, y: 0, duration: 15),
+            SKAction.removeFromParent()
+        ]))
+        
+        player.runAction(SKAction.scaleBy(2, duration: 0))
+        player.position = CGPoint(x: size.width + 200, y: size.height * 3/4)
+        player.zRotation = CGFloat(M_PI_2) // face left
+        
+        let flyIn = SKAction.moveByX(400, y: 0, duration: 2)
+        flyIn.timingMode = .EaseOut
+        player.runAction(SKAction.sequence([
+            SKAction.waitForDuration(10),
+            SKAction.moveByX((size.width + 400) * -1, y: 0, duration: 4),
+            SKAction.moveTo(CGPoint(x: -200, y: size.height / 2), duration: 1),
+            SKAction.scaleBy(0.5, duration: 0),
+            SKAction.rotateToAngle(CGFloat(-M_PI_2), duration: 0),
+            flyIn,
+            SKAction.runBlock { [weak self] in self?.player.startShooting() }
+        ]))
+
+    }
+    
+    func randomColor() -> SKColor {
+        return UIColor(red: CGFloat(drand48()), green: CGFloat(drand48()), blue: CGFloat(drand48()), alpha: 1.0)
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -163,7 +216,7 @@ extension GameScene: SKPhysicsContactDelegate {
             do {
                 try player.decrementPowerup()
             } catch {
-                player.removeFromParent()
+                player.die()
             }
         }
         

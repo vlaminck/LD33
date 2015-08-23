@@ -60,7 +60,7 @@ class Enemy: SKSpriteNode {
         zRotation = CGFloat(M_PI_2)
         
         // TODO: figure out something better here
-        dropsPowerup = Int(arc4random_uniform(15)) == 0
+        dropsPowerup = Int(arc4random_uniform(10)) == 3 // TODO: get something figured out here
     }
     
     func attackOn(scene: SKScene?) {

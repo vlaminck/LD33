@@ -77,6 +77,13 @@ class Player: SKSpriteNode {
         ]))
         runAction(shootingAction, withKey: shootingKey)
     }
+    
+    func die() {
+        runAction(SKAction.repeatAction(SKAction.sequence([
+            SKAction.fadeAlphaTo(0, duration: 0.1),
+            SKAction.fadeAlphaTo(1, duration: 0.1)
+        ]), count: 5))
+    }
 
     
 }
