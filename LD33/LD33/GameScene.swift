@@ -33,6 +33,13 @@ class GameScene: SKScene {
     var player: Player!
     var moveBulletAction: SKAction!
     
+    var score: Int = 0 {
+        didSet {
+            scoreLabel.text = String(format: "Score: %06d", score)
+        }
+    }
+    var scoreLabel: SKLabelNode = SKLabelNode(text: "")
+    
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
 
@@ -53,7 +60,13 @@ class GameScene: SKScene {
         ])))
         
         physicsWorld.contactDelegate = self
-
+        
+        score = 0
+        addChild(scoreLabel)
+        scoreLabel.fontColor = SKColor.whiteColor()
+        scoreLabel.horizontalAlignmentMode = .Right
+        scoreLabel.position = CGPoint(x: size.width - 20, y: size.height - scoreLabel.frame.size.height - 110)
+        
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -136,13 +149,14 @@ extension GameScene: SKPhysicsContactDelegate {
             do {
                 try enemy.hitByBullet(bullet.type)
             } catch {
-                player.enemiesKilled++
+                score += enemy.type.rawValue
             }
         }
         
         if let (_, powerup) = collision(contact, ordered: (Player.self, PowerUp.self)) {
             player.incrementPowerup()
             powerup.removeFromParent()
+            score += 100
         }
     }
     

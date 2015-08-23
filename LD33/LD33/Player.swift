@@ -18,8 +18,6 @@ public enum GameError: ErrorType {
 
 class Player: SKSpriteNode {
     
-    var enemiesKilled = 0
-    
     var bulletType: BulletType = .Slow {
         didSet {
             startShooting()
