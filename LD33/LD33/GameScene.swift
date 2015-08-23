@@ -59,10 +59,15 @@ class GameScene: SKScene {
             SKAction.waitForDuration(0.5)
         ]), count: 5)
         
-        runAction(SKAction.repeatActionForever(SKAction.sequence([
+        let keepEmComing = SKAction.repeatActionForever(SKAction.sequence([
             enemyString,
             SKAction.waitForDuration(5)
-        ])))
+        ]))
+        
+        runAction(SKAction.sequence([
+            SKAction.waitForDuration(15),
+            keepEmComing
+        ]))
         
         physicsWorld.contactDelegate = self
         
