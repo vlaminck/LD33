@@ -9,12 +9,14 @@
 import SpriteKit
 
 enum EnemyType: Int {
-    case A = 4
+    case A = 3
+    case B = 4
     
     var imageName: String {
         get {
             switch self {
             case .A: return "Spaceship"
+            case .B: return "Spaceship"
             }
         }
     }
@@ -30,10 +32,15 @@ enum EnemyType: Int {
     var pathDuration: NSTimeInterval {
         get {
             switch (self) {
-            case .A: return 2.5
+            case .A: return 4.0
+            case .B: return 4.0
             }
         }
     }
+}
+
+protocol EnemyDelegate {
+    func didRemoveEnemy()
 }
 
 class Enemy: SKSpriteNode {
@@ -42,10 +49,20 @@ class Enemy: SKSpriteNode {
     var health: Int = EnemyType.A.rawValue
     var dropsPowerup: Bool = false
     
-    convenience init(type: EnemyType) {
+    var delegate: EnemyDelegate?
+    
+    deinit {
+        if let delegate = delegate {
+            delegate.didRemoveEnemy()
+        }
+    }
+    
+    convenience init(type: EnemyType, delegate: EnemyDelegate?) {
         self.init(imageNamed: type.imageName)
         self.type = type
         self.health = type.rawValue
+        self.delegate = delegate
+        
         color = SKColor.redColor()
         
         let physicsBody = SKPhysicsBody(circleOfRadius: 50)

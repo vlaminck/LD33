@@ -68,7 +68,13 @@ class GameScene: SKScene {
             SKAction.waitForDuration(10)
         ])))
         
+        testWave()
+
         gameStart()
+    }
+    
+    func testWave() {
+
     }
     
     func gameStart() {
@@ -76,8 +82,9 @@ class GameScene: SKScene {
         let delayedStart = SKAction.waitForDuration(20)
         runAction(SKAction.sequence([
             delayedStart,
-            SKAction.runBlock { [weak self] in self?.sendWave(0) }
+            SKAction.runBlock { [weak self] in self?.sendWave(1) }
         ]))
+        
         
         let introScreen = SKSpriteNode(texture: nil, color: UIColor.blackColor(), size: size)
         introScreen.anchorPoint = CGPointZero
@@ -128,7 +135,7 @@ class GameScene: SKScene {
     }
     
     func sendWave(number: Int) {
-        let wave = Wave(number: number, scene: self)
+        let wave = Wave(number: number, scene: self, delegate: self)
         wave.start()
     }
     
@@ -247,3 +254,11 @@ extension GameScene: SKPhysicsContactDelegate {
     
 }
 
+extension GameScene: WaveDelegate {
+    func waveCompleted(number: Int) {
+        runAction(SKAction.sequence([
+            SKAction.waitForDuration(5),
+            SKAction.runBlock { [weak self] in self?.sendWave(number + 1) }
+        ]))
+    }
+}

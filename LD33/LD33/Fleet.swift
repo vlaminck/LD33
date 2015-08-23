@@ -14,18 +14,33 @@ enum FleetPatternOrder {
     case Mixed
 }
 
+protocol FleetDelegate {
+    func didFinish()
+}
+
 class Fleet {
     
     let type: EnemyType
     let count: Int
+    var aliveCount: Int
     private weak var scene: SKScene?
     let patternOrder: FleetPatternOrder
+    let delegate: FleetDelegate?
     
-    init(type: EnemyType, count: Int, scene: SKScene?, patternOrder: FleetPatternOrder) {
+    deinit {
+        if let delegate = delegate {
+            delegate.didFinish()
+        }
+    }
+    
+    init(type: EnemyType, count: Int, scene: SKScene?, patternOrder: FleetPatternOrder, delegate: FleetDelegate?) {
         self.type = type
         self.count = count
         self.scene = scene
         self.patternOrder = patternOrder
+        self.delegate = delegate
+
+        self.aliveCount = count
     }
     
     func attack() {
@@ -39,41 +54,64 @@ class Fleet {
             scene.addChild(enemy)
             enemy.runAction(action)
         }
-        
     }
     
     func createPath(sceneSize: CGSize) -> CGPath {
-        let start = CGPoint(x: sceneSize.width + 200, y: 200)
-        let center = CGPoint(x: sceneSize.width / 2, y: sceneSize.height / 2)
-        let end = CGPoint(x: -200, y: sceneSize.height - 200)
-        
         switch type {
         case .A:
+            let start = CGPoint(x: sceneSize.width + 200, y: 200)
+            let center = CGPoint(x: sceneSize.width / 2, y: sceneSize.height / 2)
+            let end = CGPoint(x: -200, y: sceneSize.height - 200)
+
             let bezierPath = UIBezierPath()
             bezierPath.moveToPoint(start)
             bezierPath.addCurveToPoint(center, controlPoint1: CGPointMake(start.x, start.y), controlPoint2: CGPointMake(center.x, start.y))
             bezierPath.addCurveToPoint(end, controlPoint1: CGPointMake(center.x, end.y), controlPoint2: CGPointMake(end.x, end.y))
+
+            return bezierPath.CGPath
+        case .B:
+            let start = CGPoint(x: sceneSize.width + 100, y: 0)
+            let center = CGPoint(x: sceneSize.width / 2, y: sceneSize.height / 2)
+            let end = CGPoint(x: -100, y: sceneSize.height)
+            
+            let bezierPath = UIBezierPath()
+            bezierPath.moveToPoint(start)
+            bezierPath.addCurveToPoint(center, controlPoint1: start, controlPoint2: CGPointMake(center.x, start.y))
+            bezierPath.addCurveToPoint(end, controlPoint1: CGPointMake(center.x, end.y), controlPoint2: start)
+
             return bezierPath.CGPath
         }
     }
     
     func createInversePath(sceneSize: CGSize) -> CGPath {
-        let start = CGPoint(x: sceneSize.width + 200, y: sceneSize.height - 200)
-        let center = CGPoint(x: sceneSize.width / 2, y: sceneSize.height / 2)
-        let end = CGPoint(x: -200, y: 200)
-        
         switch type {
         case .A:
+            let start = CGPoint(x: sceneSize.width + 200, y: sceneSize.height - 200)
+            let center = CGPoint(x: sceneSize.width / 2, y: sceneSize.height / 2)
+            let end = CGPoint(x: -200, y: 200)
+
             let bezierPath = UIBezierPath()
             bezierPath.moveToPoint(start)
             bezierPath.addCurveToPoint(center, controlPoint1: CGPointMake(start.x, start.y), controlPoint2: CGPointMake(center.x, start.y))
             bezierPath.addCurveToPoint(end, controlPoint1: CGPointMake(center.x, end.y), controlPoint2: CGPointMake(end.x, end.y))
+            
+            return bezierPath.CGPath
+        case .B:
+            let start = CGPoint(x: sceneSize.width + 100, y: sceneSize.height - 100)
+            let center = CGPoint(x: sceneSize.width / 2, y: sceneSize.height / 2)
+            let end = CGPoint(x: -100, y: 100)
+            
+            let bezierPath = UIBezierPath()
+            bezierPath.moveToPoint(start)
+            bezierPath.addCurveToPoint(center, controlPoint1: CGPointMake(end.x, sceneSize.height), controlPoint2: CGPointMake(end.x, center.y))
+            bezierPath.addCurveToPoint(end, controlPoint1: CGPointMake(start.x, center.y), controlPoint2: center)
+            
             return bezierPath.CGPath
         }
     }
     
     func createEnemies() -> [Enemy] {
-        return (0..<count).map { _ in return Enemy(type: type) }
+        return (0..<count).map { _ in return Enemy(type: type, delegate: self) }
     }
     
     func actionPaths(sceneSize: CGSize) -> [CGPath] {
@@ -89,22 +127,20 @@ class Fleet {
             let path = paths[i % paths.count]
             return SKAction.sequence([
                 SKAction.waitForDuration(NSTimeInterval(i)),
-                SKAction.followPath(path, asOffset: false, orientToPath: false, duration: enemyPathDuration()),
+                SKAction.followPath(path, asOffset: false, orientToPath: false, duration: type.pathDuration),
                 SKAction.removeFromParent()
             ])
         }
     }
     
-    func enemyPathDuration() -> NSTimeInterval {
-        var duration: NSTimeInterval = 0
-        switch type {
-        case .A: duration = 5
-        }
-        return duration
-    }
-    
     func totalDuration() -> NSTimeInterval {
-        return enemyPathDuration() * NSTimeInterval(count)
+        return type.pathDuration * NSTimeInterval(count)
     }
     
+}
+
+extension Fleet: EnemyDelegate {
+    func didRemoveEnemy() {
+        aliveCount--
+    }
 }

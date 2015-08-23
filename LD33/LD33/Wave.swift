@@ -8,20 +8,36 @@
 
 import SpriteKit
 
+protocol WaveDelegate {
+    func waveCompleted(number: Int)
+}
+
 class Wave {
     
     let number: Int
     let scene: SKScene?
     
-    init(number: Int, scene: SKScene) {
+    var delegate: WaveDelegate?
+    
+    var fleetCount: Int = 0
+    
+    deinit {
+        if let delegate = delegate {
+            delegate.waveCompleted(number)
+        }
+    }
+    
+    init(number: Int, scene: SKScene, delegate: WaveDelegate?) {
         self.number = number
         self.scene = scene
+        self.delegate = delegate
     }
     
     func start() {
         guard let scene = scene else { return }
 
         let fleets = createFleets()
+        fleetCount = fleets.count
         
         var delay = NSTimeInterval(0)
 
@@ -40,15 +56,6 @@ class Wave {
             scene.runAction(action)
         }
         
-        for fleet in fleets {
-            scene.runAction(SKAction.sequence([
-                SKAction.waitForDuration(delay),
-                SKAction.runBlock {
-                    delay = fleet.totalDuration()
-                    fleet.attack()
-                }
-            ]))
-        }
     }
     
     func fleetDelay() -> NSTimeInterval {
@@ -59,14 +66,24 @@ class Wave {
         guard let scene = scene else { return [] }
         
         switch number {
-        case 0:
+        case 1:
             return [
-                Fleet(type: .A, count: 1, scene: scene, patternOrder: .Normal),
-                Fleet(type: .A, count: 1, scene: scene, patternOrder: .Inverse),
-                Fleet(type: .A, count: 8, scene: scene, patternOrder: .Mixed)
+                Fleet(type: .A, count: 1, scene: scene, patternOrder: .Normal, delegate: self),
+                Fleet(type: .A, count: 1, scene: scene, patternOrder: .Inverse, delegate: self),
+                Fleet(type: .A, count: 8, scene: scene, patternOrder: .Mixed, delegate: self)
             ]
-            default: return []
+        case 2:
+            return [
+                Fleet(type: .B, count: 10, scene: scene, patternOrder: .Mixed, delegate: self)
+            ]
+        default: return []
         }
     }
     
+}
+
+extension Wave: FleetDelegate {
+    func didFinish() {
+        fleetCount--
+    }
 }
