@@ -70,9 +70,9 @@ class Fleet {
 
             return bezierPath.CGPath
         case .B:
-            let start = CGPoint(x: sceneSize.width + 100, y: 0)
+            let start = CGPoint(x: sceneSize.width + 200, y: 200)
             let center = CGPoint(x: sceneSize.width / 2, y: sceneSize.height / 2)
-            let end = CGPoint(x: -100, y: sceneSize.height)
+            let end = CGPoint(x: -200, y: sceneSize.height - 200)
             
             let bezierPath = UIBezierPath()
             bezierPath.moveToPoint(start)
@@ -97,9 +97,9 @@ class Fleet {
             
             return bezierPath.CGPath
         case .B:
-            let start = CGPoint(x: sceneSize.width + 100, y: sceneSize.height - 100)
+            let start = CGPoint(x: sceneSize.width + 200, y: sceneSize.height - 200)
             let center = CGPoint(x: sceneSize.width / 2, y: sceneSize.height / 2)
-            let end = CGPoint(x: -100, y: 100)
+            let end = CGPoint(x: -200, y: 200)
             
             let bezierPath = UIBezierPath()
             bezierPath.moveToPoint(start)
