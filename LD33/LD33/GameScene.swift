@@ -90,7 +90,7 @@ class GameScene: SKScene {
         introScreen.anchorPoint = CGPointZero
         addChild(introScreen)
         
-        let label = SKLabelNode(text: "GAME TITLE!!!")
+        let label = SKLabelNode(text: "You are the Monster")
         label.fontSize = 100
         introScreen.addChild(label)
         label.position = CGPoint(x: introScreen.size.width / 2, y: introScreen.size.height / 2)
