@@ -134,7 +134,10 @@ class GameScene: SKScene {
 
     }
     
-    func sendWave(number: Int) {
+    func sendWave(var number: Int) {
+        if number > 2 {
+            number = 1
+        }
         let wave = Wave(number: number, scene: self, delegate: self)
         wave.start()
     }

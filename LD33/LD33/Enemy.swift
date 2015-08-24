@@ -58,12 +58,11 @@ class Enemy: SKSpriteNode {
     }
     
     convenience init(type: EnemyType, delegate: EnemyDelegate?) {
-        self.init(imageNamed: type.imageName)
+//        self.init(imageNamed: type.imageName)
+        self.init(texture: nil, color: SKColor.whiteColor(), size: CGSize(width: 100, height: 100))
         self.type = type
         self.health = type.rawValue
         self.delegate = delegate
-        
-        color = SKColor.redColor()
         
         let physicsBody = SKPhysicsBody(circleOfRadius: 50)
         physicsBody.affectedByGravity = false
@@ -73,11 +72,17 @@ class Enemy: SKSpriteNode {
         self.physicsBody = physicsBody
 
         // spaceship shit
-        size = CGSize(width: 100, height: 100)
+//        size = CGSize(width: 100, height: 100)
         zRotation = CGFloat(M_PI_2)
         
         // TODO: figure out something better here
         dropsPowerup = Int(arc4random_uniform(10)) == 3 // TODO: get something figured out here
+        
+        let label = SKLabelNode(text: "Good Guy")
+        label.fontColor = SKColor.blackColor()
+        label.fontSize = 21
+        addChild(label)
+
     }
     
     func attackOn(scene: SKScene?) {

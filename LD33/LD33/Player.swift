@@ -27,8 +27,9 @@ class Player: SKSpriteNode {
     
     
     convenience init() {
-        let initialPowerupLevel: BulletType = .Slow
-        self.init(imageNamed: initialPowerupLevel.imageName)
+//        let initialPowerupLevel: BulletType = .Slow
+//        self.init(imageNamed: initialPowerupLevel.imageName)
+        self.init(texture: nil, color: SKColor.whiteColor(), size: CGSize(width: 100, height: 100))
 
         let physicsBody = SKPhysicsBody(circleOfRadius: 50)
         physicsBody.affectedByGravity = false
@@ -38,8 +39,13 @@ class Player: SKSpriteNode {
         self.physicsBody = physicsBody
 
         // spaceship shit
-        size = CGSize(width: 100, height: 100)
+//        size = CGSize(width: 100, height: 100)
         zRotation = CGFloat(-M_PI_2)
+        
+        let label = SKLabelNode(text: "Monster")
+        label.fontColor = SKColor.blackColor()
+        label.fontSize = 21
+        addChild(label)
 
     }
     
